@@ -3,36 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Banana Bloom — Chips & Chivda</title>
+  <title>Kela Crisp — Authentic Indian Banana Snacks from Jalgaon</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:wght@400;700&family=Hind:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --mint: #F0FFF1;
-      --banana: #FDEE87;
-      --teal: #008080;
-      --charcoal: #36454F;
+      --saffron: #FF9933;
+      --gold: #FFD700;
+      --deep-green: #138808;
+      --dark-text: #2c3e50;
+      --bg-light: #FFF8E1;
+      --card-bg: #FFFFFF;
+    }
+
+    /* General Smoothness */
+    *, *::before, *::after {
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
     body {
       margin: 0;
-      font-family: 'Lato', sans-serif;
-      background: var(--mint);
-      color: var(--charcoal);
+      font-family: 'Hind', sans-serif;
+      background-color: var(--bg-light);
+      /* Subtle paisley background pattern */
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23138808' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--dark-text);
       overflow-x: hidden;
     }
 
     h1, h2, h3 {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-weight: 700;
     }
 
     /* Loader */
     #loader {
       position: fixed;
       inset: 0;
-      background: var(--mint);
+      background: var(--bg-light);
       z-index: 9999;
       display: flex;
       flex-direction: column;
@@ -41,126 +53,215 @@
       transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
     }
     #loader.hidden { opacity: 0; visibility: hidden; }
-    .banana-loader {
+    .paisley-loader {
       width: 100px;
       height: 100px;
-      animation: peel-bob 2s infinite ease-in-out;
+      animation: spin-bob 2.5s infinite ease-in-out;
     }
-    @keyframes peel-bob {
-      0%, 100% { transform: translateY(0) rotate(-8deg); }
-      50% { transform: translateY(-20px) rotate(8deg); }
+    @keyframes spin-bob {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: rotate(15deg); }
+      50% { transform: translateY(-20px) rotate(0deg); }
+      75% { transform: rotate(-15deg); }
     }
     .progress {
       width: 200px;
       height: 6px;
       border-radius: 3px;
       overflow: hidden;
-      background: #ddd;
+      background: rgba(0,0,0,0.1);
       margin-top: 1rem;
     }
     .progress-bar {
       width: 0;
       height: 100%;
-      background: var(--teal);
+      background: var(--saffron);
       animation: progress 2s forwards;
     }
     @keyframes progress { to { width: 100%; } }
+    #loader p {
+      margin-top: 1rem;
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: 1.1rem;
+    }
 
     /* Header */
     header {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(8px);
+      background: rgba(255, 248, 225, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.75rem 1rem;
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
     .logo {
       display: flex;
       align-items: center;
+      font-family: 'Tiro Devanagari Hindi', serif;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .logo:hover {
+        transform: scale(1.05);
     }
     .logo-icon {
-      width: 32px; height: 32px;
-      background: var(--banana);
-      border-radius: 8px;
-      margin-right: 0.5rem;
+      width: 36px; height: 36px;
+      margin-right: 0.75rem;
     }
 
     /* Hamburger */
     .hamburger {
+      background: none;
+      border: none;
       width: 28px; height: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
+      padding: 0;
     }
     .hamburger span {
       display: block;
       height: 3px;
-      background: var(--charcoal);
+      background: var(--dark-text);
       border-radius: 3px;
       transition: transform 0.3s ease, opacity 0.3s ease;
+      transform-origin: center;
     }
-    .hamburger.open .line1 { transform: translateY(8px) rotate(45deg); }
-    .hamburger.open .line2 { opacity: 0; }
-    .hamburger.open .line3 { transform: translateY(-8px) rotate(-45deg); }
+    .hamburger.open .line1 { transform: translateY(8.5px) rotate(45deg); }
+    .hamburger.open .line2 { opacity: 0; transform: scaleX(0); }
+    .hamburger.open .line3 { transform: translateY(-8.5px) rotate(-45deg); }
 
     /* Slide menu */
     nav#mobile-menu {
       position: fixed;
       top: 0; right: 0; bottom: 0;
-      width: 32%;
-      min-width: 260px;
-      background: rgba(255,255,255,0.95);
+      width: 40%;
+      min-width: 280px;
+      background: rgba(255, 248, 225, 0.95);
+      backdrop-filter: blur(10px);
       transform: translateX(100%);
-      transition: transform 0.4s ease;
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 2rem;
+      gap: 2.5rem;
       z-index: 90;
     }
     nav#mobile-menu.open { transform: translateX(0); }
     nav#mobile-menu a {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--charcoal);
+      font-size: 1.8rem;
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-weight: 700;
+      color: var(--dark-text);
       text-decoration: none;
-      transition: color 0.3s;
+      transition: color 0.3s, transform 0.3s;
+      transform: translateX(20px);
+      opacity: 0;
     }
-    nav#mobile-menu a:hover { color: var(--teal); }
+    nav#mobile-menu.open a {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    /* Staggered animation for menu items */
+    nav#mobile-menu.open a:nth-child(1) { transition-delay: 0.1s; }
+    nav#mobile-menu.open a:nth-child(2) { transition-delay: 0.15s; }
+    nav#mobile-menu.open a:nth-child(3) { transition-delay: 0.2s; }
+    nav#mobile-menu.open a:nth-child(4) { transition-delay: 0.25s; }
+
+    nav#mobile-menu a:hover { color: var(--saffron); transform: scale(1.1); }
 
     #main-content.menu-open {
       filter: blur(6px) brightness(0.8);
       transform: scale(0.98);
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
+      pointer-events: none; /* Prevent interaction with main content when menu is open */
     }
 
     /* Hero */
     .hero {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 3rem 1.5rem 2rem;
     }
-    .hero h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    .hero p { max-width: 600px; margin: 0 auto; }
+    .hero h1, .hero p, .recipe-section {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .hero h1.visible, .hero p.visible, .recipe-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .hero p.visible { transition-delay: 0.1s; }
+    .recipe-section.visible { transition-delay: 0.2s; }
+
+    .hero h1 { 
+        font-size: clamp(2.5rem, 8vw, 4.5rem); 
+        margin-bottom: 0.5rem; 
+        color: var(--saffron);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    .hero p { max-width: 600px; margin: 0 auto 2rem; font-size: 1.1rem; }
+
+    /* Gemini Recipe Section */
+    .recipe-section {
+        text-align: center;
+        padding: 2rem 1.5rem 4rem;
+        background: rgba(255,255,255,0.2);
+    }
+    .recipe-section h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+     .recipe-section p {
+        max-width: 600px;
+        margin: 0 auto 1.5rem;
+     }
+    .gemini-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        border: none;
+        background: linear-gradient(45deg, var(--saffron), var(--gold));
+        color: var(--dark-text);
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+        font-family: 'Hind', sans-serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 15px rgba(255,153,51,0.3);
+    }
+    .gemini-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(255,153,51,0.4);
+    }
+    .gemini-btn:active, .btn:active {
+        transform: scale(0.98);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
 
     /* Product Grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(240px,1fr));
-      gap: 1.5rem;
-      padding: 1rem;
+      grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+      gap: 2rem;
+      padding: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     .product-card {
       perspective: 1000px;
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(40px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .product-card.visible {
@@ -168,54 +269,66 @@
       transform: translateY(0);
     }
     .card-inner {
-      background: #fff;
-      border-radius: 12px;
+      background: var(--card-bg);
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border: 1px solid rgba(0,0,0,0.05);
     }
     .card-inner:hover {
-      box-shadow: 0 20px 40px rgba(0,128,128,0.3);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(255,153,51,0.2);
     }
     .card-inner::before {
       content: '';
       position: absolute;
       inset: 0;
-      border: 2px solid var(--teal);
-      border-radius: 12px;
-      transform: scale(0.95);
+      border: 2px solid var(--saffron);
+      border-radius: 16px;
+      transform: scale(0.96);
       opacity: 0;
       transition: transform 0.3s, opacity 0.3s;
+      pointer-events: none;
     }
     .card-inner:hover::before {
       transform: scale(1);
       opacity: 1;
     }
     .card-inner img {
-      width: 100%; height: 180px;
+      width: 100%; height: 200px;
       object-fit: cover;
       transition: transform 0.4s ease;
     }
     .card-inner:hover img {
-      transform: scale(1.05);
+      transform: scale(1.08);
     }
     .card-body {
-      padding: 1rem;
+      padding: 1.25rem;
     }
-    .price { font-weight: 700; margin: 0.5rem 0; }
+    .card-body h3 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+    }
+    .price { font-weight: 600; margin: 0.5rem 0 1rem; font-size: 1.2rem; color: var(--deep-green); }
     .btn {
       display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 9999px;
+      width: 100%;
+      text-align: center;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
       border: none;
-      background: var(--teal);
+      background: var(--deep-green);
       color: #fff;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+      font-family: 'Hind', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
     }
-    .btn:hover { background: #006666; }
+    .btn:hover { background: #106c06; transform: scale(1.03); }
 
     /* Toast */
     .toast {
@@ -223,36 +336,128 @@
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--charcoal);
+      background: var(--dark-text);
       color: #fff;
       padding: 0.75rem 1.25rem;
       border-radius: 8px;
       opacity: 0;
-      transition: opacity 0.4s, transform 0.4s;
-      z-index: 100;
+      visibility: hidden;
+      transition: opacity 0.4s, transform 0.4s, visibility 0.4s;
+      z-index: 10001;
     }
     .toast.show {
       opacity: 1;
+      visibility: visible;
       transform: translateX(-50%) translateY(-10px);
     }
 
-    /* Confetti */
-    .confetti {
+    /* Marigold Petals */
+    .petal {
       position: fixed;
-      width: 10px; height: 20px;
-      background: var(--banana);
-      top: -20px;
-      animation: fall 3s linear forwards;
+      width: 15px; height: 25px;
+      border-radius: 50% 0;
+      top: -30px;
+      animation: fall 4s linear forwards;
       z-index: 2000;
+      pointer-events: none;
     }
     @keyframes fall {
-      to { transform: translateY(110vh) rotate(360deg); }
+      to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+    
+    /* Recipe Modal */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s, visibility 0.4s;
+    }
+    .modal-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    .modal {
+        background: var(--bg-light);
+        padding: 2rem;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        transform: scale(0.9);
+        transition: transform 0.4s;
+    }
+    .modal-overlay.show .modal {
+        transform: scale(1);
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    .modal-header h2 {
+        margin: 0;
+        font-size: 1.8rem;
+    }
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        line-height: 1;
+    }
+    .modal-content label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+    .modal-content textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        min-height: 80px;
+        font-family: 'Hind', sans-serif;
+        margin-bottom: 1rem;
+        box-sizing: border-box;
+    }
+    #recipe-output {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #ddd;
+        white-space: pre-wrap;
+        line-height: 1.6;
+    }
+    #recipe-output h3 { color: var(--saffron); }
+    #recipe-output ul { padding-left: 20px; }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(0,0,0,0.1);
+        border-left-color: var(--saffron);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 2rem auto 0;
+        display: none; /* Hidden by default */
+    }
+    @keyframes spin {
+        to { transform: rotate(360deg); }
     }
 
+
     /* Accessibility */
-    a:focus, button:focus {
-      outline: 3px solid var(--banana);
-      outline-offset: 2px;
+    a:focus-visible, button:focus-visible, textarea:focus-visible {
+      outline: 3px solid var(--saffron);
+      outline-offset: 3px;
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -260,44 +465,73 @@
 
   <!-- Loader -->
   <div id="loader">
-    <svg class="banana-loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 95,50 C 95,28 78,10 55,10 C 32,10 15,28 15,50 C 15,72 32,90 55,90 C 78,90 95,72 95,50 Z" fill="#FDEE87" transform="rotate(-45 55 50)"/>
-      <path d="M 60,12 C 58,10 52,9 50,11 L 40,25 C 38,27 42,29 44,27 L 54,13 C 56,11 62,14 60,12 Z" fill="#A37F4C"/>
+    <svg class="paisley-loader" viewBox="0 0 68 103" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+        <path d="M52.48,1.521c-2.48,-2.48 -6.55,-2.48 -9.03,0c-11.85,11.85 -20.66,28.6 -22.42,46.12c-0.3,2.94 0.33,5.86 1.83,8.34c3.42,5.65 9.77,8.85 16.62,8.85c10.87,0 19.7,-8.83 19.7,-19.7c0,-10.87 -8.83,-19.7 -19.7,-19.7c-5.94,0 -11.26,2.65 -14.9,6.86" fill="none" stroke="#ff9933" stroke-width="4"/>
+        <path d="M12.91,65.851c-4.48,0.22 -8.57,2.2 -11.41,5.34c-3.88,4.27 -3.88,11.18 0,15.45c3.88,4.27 10.16,4.27 14.04,0c3.2,-3.52 4.16,-8.33 2.76,-12.55" fill="none" stroke="#138808" stroke-width="4"/>
     </svg>
     <div class="progress"><div class="progress-bar"></div></div>
-    <p>Getting things fresh…</p>
+    <p>Swad taiyar ho raha hai...</p>
   </div>
 
   <!-- Slide-out Navigation -->
   <nav id="mobile-menu">
     <a href="#">Home</a>
-    <a href="#">About</a>
+    <a href="#">About Us</a>
     <a href="#">Contact</a>
-    <a href="#">Cart (0)</a>
+    <a href="#">Bag (0)</a>
   </nav>
 
   <!-- Main -->
   <div id="main-content">
     <header>
       <div class="logo">
-        <div class="logo-icon"></div> Banana Bloom — Chips & Chivda
+        <svg class="logo-icon" viewBox="0 0 68 103" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M52.48,1.521c-2.48,-2.48 -6.55,-2.48 -9.03,0c-11.85,11.85 -20.66,28.6 -22.42,46.12c-0.3,2.94 0.33,5.86 1.83,8.34c3.42,5.65 9.77,8.85 16.62,8.85c10.87,0 19.7,-8.83 19.7,-19.7c0,-10.87 -8.83,-19.7 -19.7,-19.7c-5.94,0 -11.26,2.65 -14.9,6.86" fill="#FF9933"/><path d="M12.91,65.851c-4.48,0.22 -8.57,2.2 -11.41,5.34c-3.88,4.27 -3.88,11.18 0,15.45c3.88,4.27 10.16,4.27 14.04,0c3.2,-3.52 4.16,-8.33 2.76,-12.55" fill="#138808"/></svg>
+        Kela Crisp
       </div>
-      <button class="hamburger" id="menu-btn" aria-label="Toggle menu">
+      <button class="hamburger" id="menu-btn" aria-label="Toggle menu" aria-expanded="false">
         <span class="line1"></span>
         <span class="line2"></span>
         <span class="line3"></span>
       </button>
     </header>
 
-    <section class="hero">
-      <h1>Go Bananas!</h1>
-      <p>Discover our exclusive collection of banana-based products, crafted with freshness and fun interactions.</p>
-    </section>
+    <main>
+      <section class="hero">
+        <h1 class="animate-on-scroll">Swad Jalgaon Ka, Desh Bhar Mein!</h1>
+        <p class="animate-on-scroll">Discover our authentic collection of traditional banana snacks, crafted with the freshest ingredients and a whole lot of love.</p>
+      </section>
 
-    <section class="grid" id="product-grid"></section>
+      <section class="recipe-section animate-on-scroll">
+          <h2>Stuck for Ideas?</h2>
+          <p>Tell us what ingredients you have, and our AI chef will whip up a unique recipe featuring our Kela Crisp products just for you!</p>
+          <button class="gemini-btn" id="open-recipe-modal">
+            ✨ Get Recipe Ideas
+          </button>
+      </section>
+
+      <section class="grid" id="product-grid"></section>
+    </main>
   </div>
 
-  <div class="toast" id="toast">Added to cart!</div>
+  <div class="toast" id="toast">Added to bag!</div>
+
+  <!-- Recipe Modal -->
+  <div class="modal-overlay" id="recipe-modal-overlay">
+      <div class="modal" id="recipe-modal">
+          <div class="modal-header">
+              <h2>AI Recipe Helper</h2>
+              <button class="close-btn" id="close-recipe-modal">&times;</button>
+          </div>
+          <div class="modal-content">
+              <label for="ingredients-input">Enter ingredients you have (e.g., potatoes, onions, masala chips):</label>
+              <textarea id="ingredients-input" rows="3" placeholder="I have tomatoes, some paneer, and a packet of Kela Crisp Masala Chips..."></textarea>
+              <button class="gemini-btn" id="generate-recipe-btn">Generate Recipe</button>
+              <div class="spinner" id="recipe-spinner"></div>
+              <div id="recipe-output"></div>
+          </div>
+      </div>
+  </div>
+
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -307,18 +541,25 @@
       const mobileMenu = document.getElementById('mobile-menu');
       const productGrid = document.getElementById('product-grid');
       const toast = document.getElementById('toast');
+      const openRecipeModalBtn = document.getElementById('open-recipe-modal');
+      const recipeModalOverlay = document.getElementById('recipe-modal-overlay');
+      const closeRecipeModalBtn = document.getElementById('close-recipe-modal');
+      const generateRecipeBtn = document.getElementById('generate-recipe-btn');
+      const ingredientsInput = document.getElementById('ingredients-input');
+      const recipeOutput = document.getElementById('recipe-output');
+      const recipeSpinner = document.getElementById('recipe-spinner');
 
-      // Products
+
+      // Products with an Indian twist
       const products = [
-        { name: 'Banana Chips (Plain)', price: '3.50', img: 'https://placehold.co/400x300/FDEE87/36454F?text=Chips+Plain' },
-        { name: 'Banana Chips (Peri-Peri)', price: '3.75', img: 'https://placehold.co/400x300/FDEE87/36454F?text=Chips+Peri+Peri' },
-        { name: 'Banana Chips (Pepper)', price: '3.60', img: 'https://placehold.co/400x300/FDEE87/36454F?text=Chips+Pepper' },
-        { name: 'Banana Chivda', price: '4.00', img: 'https://placehold.co/400x300/FDEE87/36454F?text=Chivda' },
-        { name: 'Banana Flour', price: '5.50', img: 'https://placehold.co/400x300/FDEE87/36454F?text=Flour' },
-        { name: 'Banana Jaggery Bites', price: '6.20', img: 'https://placehold.co/400x300/FDEE87/36454F?text=Jaggery+Bites' },
-        { name: 'Banana Energy Bars', price: '2.80', img: 'https://placehold.co/400x300/FDEE87/36454F?text=Energy+Bars' },
-        { name: 'Banana Smoothie Mix', price: '7.00', img: 'https://placehold.co/400x300/FDEE87/36454F?text=Smoothie+Mix' },
-        { name: 'Dried Banana Coins', price: '4.40', img: 'https://placehold.co/400x300/FDEE87/36454F?text=Dried+Coins' }
+        { name: 'Classic Salted Chips', price: '150', img: 'https://placehold.co/400x300/FF9933/FFF8E1?text=Classic+Salted' },
+        { name: 'Spicy Masala Chips', price: '175', img: 'https://placehold.co/400x300/FF9933/FFF8E1?text=Masala+Chips' },
+        { name: 'Kali Mirch Chips', price: '160', img: 'https://placehold.co/400x300/FF9933/FFF8E1?text=Pepper+Chips' },
+        { name: 'Tangy Tomato Chips', price: '170', img: 'https://placehold.co/400x300/FF9933/FFF8E1?text=Tomato+Chips' },
+        { name: 'Khatta Meetha Chivda', price: '200', img: 'https://placehold.co/400x300/FF9933/FFF8E1?text=Sweet+%26+Sour' },
+        { name: 'Banana Jaggery Bites', price: '220', img: 'https://placehold.co/400x300/FF9933/FFF8E1?text=Gud+Kela' },
+        { name: 'Dried Banana Coins', price: '190', img: 'https://placehold.co/400x300/FF9933/FFF8E1?text=Dried+Kela' },
+        { name: 'Banana Flour (Atta)', price: '250', img: 'https://placehold.co/400x300/FF9933/FFF8E1?text=Kela+Atta' }
       ];
 
       // Populate products
@@ -327,11 +568,11 @@
         card.className = 'product-card';
         card.innerHTML = `
           <div class="card-inner">
-            <img src="${p.img}" alt="${p.name}">
+            <img src="${p.img}" alt="${p.name}" loading="lazy">
             <div class="card-body">
               <h3>${p.name}</h3>
-              <p class="price">$${p.price}</p>
-              <button class="btn">Add to Cart</button>
+              <p class="price">₹${p.price}</p>
+              <button class="btn">Add to Bag</button>
             </div>
           </div>
         `;
@@ -342,20 +583,42 @@
       window.addEventListener('load', () => {
         setTimeout(() => {
           loader.classList.add('hidden');
-          spawnConfetti();
+          spawnPetals();
           setupObserver();
-          setupTilt();
         }, 2000);
       });
+      
+      function closeMobileMenu() {
+        menuBtn.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', false);
+        mobileMenu.classList.remove('open');
+        main.classList.remove('menu-open');
+      }
 
       // Menu toggle
       menuBtn.addEventListener('click', () => {
-        menuBtn.classList.toggle('open');
+        const isOpened = menuBtn.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', isOpened);
         mobileMenu.classList.toggle('open');
         main.classList.toggle('menu-open');
       });
+      
+      // *** FIX: Close menu when clicking outside ***
+      document.addEventListener('click', (e) => {
+        if (main.classList.contains('menu-open') && !mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+           closeMobileMenu();
+        }
+      });
+      
+      // Also close menu if a menu link is clicked
+      mobileMenu.addEventListener('click', (e) => {
+          if(e.target.tagName === 'A') {
+              closeMobileMenu();
+          }
+      });
 
-      // Scroll reveal
+
+      // Scroll reveal for various elements
       function setupObserver() {
         const obs = new IntersectionObserver((entries) => {
           entries.forEach(e => {
@@ -364,52 +627,120 @@
               obs.unobserve(e.target);
             }
           });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        
+        // Observe product cards
         document.querySelectorAll('.product-card').forEach(el => obs.observe(el));
+        // Observe hero and recipe elements
+        document.querySelectorAll('.animate-on-scroll').forEach(el => obs.observe(el));
       }
 
-      // Tilt effect
-      function setupTilt() {
-        document.querySelectorAll('.card-inner').forEach(card => {
-          card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const rotateX = ((y - rect.height/2) / rect.height) * -10;
-            const rotateY = ((x - rect.width/2) / rect.width) * 10;
-            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-          });
-          card.addEventListener('mouseleave', () => {
-            card.style.transform = 'rotateX(0) rotateY(0) scale(1)';
-          });
-        });
-      }
-
-      // Toast
+      // Toast notification
+      let toastTimer;
       document.body.addEventListener('click', e => {
         if (e.target.classList.contains('btn')) {
-          showToast("Added to cart!");
+          showToast("Added to bag!");
         }
       });
+
       function showToast(msg) {
+        clearTimeout(toastTimer);
         toast.textContent = msg;
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
       }
 
-      // Confetti once
-      function spawnConfetti() {
-        for (let i = 0; i < 20; i++) {
-          const c = document.createElement('div');
-          c.className = 'confetti';
-          c.style.left = Math.random()*100 + 'vw';
-          c.style.background = Math.random() > 0.5 ? 'var(--banana)' : 'var(--teal)';
-          c.style.animationDuration = (2+Math.random()*2) + 's';
-          document.body.appendChild(c);
-          setTimeout(()=>c.remove(),4000);
+      // Marigold petal confetti effect
+      function spawnPetals() {
+        for (let i = 0; i < 25; i++) {
+          const petal = document.createElement('div');
+          petal.className = 'petal';
+          petal.style.left = Math.random()*100 + 'vw';
+          petal.style.background = Math.random() > 0.4 ? 'var(--saffron)' : 'var(--gold)';
+          petal.style.animationDuration = (3 + Math.random() * 2) + 's';
+          petal.style.animationDelay = Math.random() * 1 + 's';
+          document.body.appendChild(petal);
+          setTimeout(()=> petal.remove(), 6000);
         }
       }
+
+      // --- Gemini AI Recipe Feature ---
+
+      // Modal Logic
+      openRecipeModalBtn.addEventListener('click', () => recipeModalOverlay.classList.add('show'));
+      closeRecipeModalBtn.addEventListener('click', () => recipeModalOverlay.classList.remove('show'));
+      recipeModalOverlay.addEventListener('click', (e) => {
+          if (e.target === recipeModalOverlay) {
+              recipeModalOverlay.classList.remove('show');
+          }
+      });
+
+      // Call Gemini API
+      generateRecipeBtn.addEventListener('click', async () => {
+          const userIngredients = ingredientsInput.value.trim();
+          if (!userIngredients) {
+              showToast("Please enter some ingredients!");
+              return;
+          }
+
+          recipeSpinner.style.display = 'block';
+          generateRecipeBtn.disabled = true;
+          recipeOutput.innerHTML = '';
+
+          const apiKey = ""; // Canvas will provide this
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+          
+          const systemPrompt = "You are a creative and friendly Indian chef from Jalgaon, Maharashtra, specializing in home-style cooking. A user will provide a list of ingredients. Your task is to create a simple, delicious, and unique recipe that prominently features one or more 'Kela Crisp' brand banana products (like masala chips, banana flour, jaggery bites, etc.). The recipe must be easy for a home cook to follow. Format the response clearly with a catchy recipe title (using `<h3>`), a brief, enticing description, an ingredients list (using `<ul>` and `<li>`), and step-by-step instructions (using `<ol>` and `<li>`).";
+          const userQuery = `Here are the ingredients I have: ${userIngredients}. Please create a recipe for me.`;
+
+          const payload = {
+              contents: [{ parts: [{ text: userQuery }] }],
+              systemInstruction: { parts: [{ text: systemPrompt }] },
+          };
+
+          try {
+            const response = await fetchWithExponentialBackoff(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            const candidate = result.candidates?.[0];
+
+            if (candidate && candidate.content?.parts?.[0]?.text) {
+                recipeOutput.innerHTML = candidate.content.parts[0].text;
+            } else {
+                throw new Error("Could not get a recipe. Please try again.");
+            }
+
+          } catch (error) {
+              console.error("Gemini API call failed:", error);
+              recipeOutput.innerHTML = `<p style="color: red;">Sorry, I couldn't come up with a recipe right now. Please check your ingredients and try again.</p>`;
+          } finally {
+              recipeSpinner.style.display = 'none';
+              generateRecipeBtn.disabled = false;
+          }
+      });
+
+      async function fetchWithExponentialBackoff(url, options, retries = 3, delay = 1000) {
+          try {
+              return await fetch(url, options);
+          } catch (err) {
+              if (retries > 0) {
+                  await new Promise(resolve => setTimeout(resolve, delay));
+                  return fetchWithExponentialBackoff(url, options, retries - 1, delay * 2);
+              }
+              throw err;
+          }
+      }
+
     });
   </script>
 </body>
 </html>
+
